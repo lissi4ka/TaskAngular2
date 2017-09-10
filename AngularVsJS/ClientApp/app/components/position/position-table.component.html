@@ -1,0 +1,29 @@
+<div>
+    <h4 for="filteringOptions">Filter:</h4>
+    <div *ngFor="let option of filteringOptions">
+        <label class="checkbox-inline">
+            <input type="checkbox"
+                   name="options"
+                   value="{{option.value}}"
+                   [(ngModel)]="option.checked" 
+                   (change)="filtering($event)"/>
+            {{option.title}}
+        </label>
+    </div>
+</div>
+<div class="row">
+<button class="btn btn-default col-md-3" (click)="createDeffect()">Create Deffect</button>
+    <div class="col-md-1"></div>
+<button class="btn btn-default col-md-3" (click)="createTask()">Create Task</button>
+</div>
+    <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="showInfoForSelectedItem($event.data)" (custom)="onCustom($event)"></ng2-smart-table>
+<div class="panel panel-default">
+    <div *ngIf="selectedItem || selectDateFormat" class="panel-body">
+        Name: {{selectedItem.name}}<br />
+        Description: {{selectedItem.description}}<br />
+        Status: {{selectedItem.status}}<br />
+        Added: {{selectedItem.date | date:'medium'}}
+    </div>
+</div>
+
+

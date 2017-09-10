@@ -1,0 +1,35 @@
+﻿
+<h3 *ngIf="id == 0">Create new {{type | capitalizeFirst}}</h3>
+<h3 *ngIf="id != 0">Edit {{type | capitalizeFirst}}</h3>
+
+
+<form #positionForm="ngForm" (ngSubmit)="onSubmit(positionForm)" class="form-group">
+    <div>
+        Date of create: {{position.date |  date:'medium'}}
+    </div>
+    <br />
+    <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required [(ngModel)]="position.name" class="form-control" #name="ngModel"/>
+        <div *ngIf="positionForm.invalid && (name.dirty || name.touched)"
+             class="alert alert-danger">
+            <div *ngIf="name.errors.required">
+                Name is required.
+            </div>
+        </div>
+        </div>
+    <div>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" row="3" type="text" [(ngModel)]="position.description" class="form-control"></textarea>
+    </div>
+    <div *ngIf="id != 0">
+        <label for="status">Status</label>
+        <select class="form-control"  name="status" [(ngModel)]="position.status">
+            <option *ngFor="let item of statusies | enumToArray" [value]="item.key">{{item.value}}</option>
+        </select>
+    </div>
+    <br>
+    <button *ngIf="id == 0" class="btn btn-success" [disabled]="!positionForm.valid" type="submit" >Create</button>
+    <button *ngIf="id != 0" class="btn btn-success" [disabled]="!positionForm.valid" type="submit">Edit</button>
+</form>
+<a (click)="backToTable()">Back to Table</a>
